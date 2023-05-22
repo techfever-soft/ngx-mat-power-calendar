@@ -1,0 +1,180 @@
+@use "@angular/material" as mat;
+// NOTE: @use 'ngx-mat-power-calendar/src/lib/global.scss' as power-calendar;
+@use "../../ngx-mat-power-calendar/src/lib/global.scss" as power-calendar;
+
+@include mat.core();
+
+$my-primary: mat.define-palette(mat.$teal-palette, 500);
+$my-accent: mat.define-palette(mat.$purple-palette, A200, A100, A400);
+
+$my-typography: mat.define-typography-config(
+  $font-family: "Montserrat",
+);
+
+$my-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $my-primary,
+      accent: $my-accent,
+    ),
+    typography: $my-typography,
+    density: 0,
+  )
+);
+
+@include mat.core-theme($my-theme);
+
+@include mat.all-component-themes($my-theme);
+
+// NOTE: Don't forget to pass your theme to ngx-mat-power-calendar
+@include power-calendar.power-calendar($my-theme);
+
+// NOTE: Overrides
+
+$color-config: mat.get-color-config($my-theme);
+$background: mat.get-color-from-palette($color-config, "background");
+
+body {
+  font-family: "Montserrat";
+  margin: 0;
+  background: mat.get-color-from-palette($background, "background");
+}
+
+p.mat-p {
+  @include mat.typography-level($my-typography, "body-2");
+}
+
+p.mat-caption {
+  @include mat.typography-level($my-typography, "caption");
+}
+
+/**
+NOTE: Custom styles
+*/
+
+
+.mat-mdc-card {
+  width: auto;
+  border-radius: 15px !important;
+}
+
+.mat-mdc-button,
+.mat-mdc-raised-button {
+  border-radius: 15px !important;
+}
+
+.mat-mdc-table {
+  overflow-x: auto;
+  display: block;
+  white-space: nowrap !important;
+}
+
+.mat-drawer-container {
+  height: 100%;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  opacity: 0.5;
+}
+
+.container {
+  position: relative;
+}
+
+.mdc-card {
+  max-height: 500px;
+  width: fit-content;
+  max-width: calc(100% - 5em);
+  margin: 25px auto;
+  padding: 25px;
+  overflow: auto;
+}
+
+.mat-table {
+  overflow-x: scroll;
+}
+
+.mat-cell,
+.mat-header-cell {
+  word-wrap: initial;
+  display: table-cell;
+  padding: 0px 10px;
+  line-break: unset;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: middle;
+}
+.mat-row,
+.mat-header-row {
+  display: table-row;
+}
+
+// ANCHOR: App styles
+
+mat-toolbar.brand-toolbar {
+  display: flex;
+  a {
+    display: flex;
+    color: #fff;
+    text-decoration: none;
+    transition: opacity 0.5s ease-in-out;
+    padding: 10px;
+    border-radius: 15px;
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+  img {
+    width: 40px;
+    margin-right: 10px;
+  }
+}
+
+app-examples {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  mat-card {
+    margin: 20px;
+  }
+}
+
+.footer {
+  padding: 25px 0;
+  h4 {
+    font-weight: normal;
+    a {
+      text-decoration: none;
+      font-weight: bold;
+      color: mat.get-color-from-palette($my-primary);
+    }
+  }
+}

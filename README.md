@@ -1,4 +1,39 @@
-# NgxMatPowerCalendar
+# 📆 ngx-mat-power-calendar
+
+A package to help you to generate calendar inspired by the android calendar.
+
+Events will be added to your days (TODO)
+
+#
+
+![](https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=&slug=techfever&button_colour=43a047&font_colour=ffffff&font_family=Poppins&outline_colour=ffffff&coffee_colour=FFDD00)
+
+#
+
+![](https://img.shields.io/github/checks-status/techfever-soft/ngx-mat-power-calendar/main)
+
+![](https://img.shields.io/npm/l/ngx-mat-power-calendar)
+
+![](https://img.shields.io/npm/v/ngx-mat-power-calendar)
+
+![](https://img.shields.io/npm/dt/ngx-mat-power-calendar)
+
+#
+
+## Demo and documentation
+
+@see
+[DEMO & DOCUMENTATION](https://ngx-mat-power-calendar.web.app/)
+
+#
+
+## Getting started
+
+`npm i -s ngx-mat-power-calendar`
+
+Examples are in the documentation of the demo
+
+#
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.5.
 

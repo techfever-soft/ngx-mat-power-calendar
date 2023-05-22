@@ -1,0 +1,26 @@
+<div class="event-container">
+  <div
+    class="event"
+    *ngFor="let event of day.events"
+    style="background: red; top: 1px"
+  >
+    <pre>
+      {{ event | json }}
+     </pre
+    >
+  </div>
+</div>
+
+<div *ngFor="let hour of hours" class="hour">
+  <div class="hour-inner">
+    <div class="hour-inner--caption {{ hour.isNow ? 'now' : '' }}">
+      {{ hour.date | amDateFormat : "HH:mm" }}
+    </div>
+  </div>
+  <div
+    class="hour-tracker"
+    *ngIf="hour.isNow"
+    [ngStyle]="{ top: 'calc(-60px + ' + hour.top + 'px)' }"
+  ></div>
+  <mat-divider></mat-divider>
+</div>

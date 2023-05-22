@@ -1,0 +1,71 @@
+<mat-toolbar class="brand-toolbar">
+  <a
+    href="//techfever.dev"
+    target="_blank"
+    matRipple
+    matTooltip="Go on our website"
+  >
+    <img src="/assets/techfever_logo.png" alt="Techfever logo" />
+    <h3 class="mat-h3"><b>TechFever</b></h3>
+  </a>
+
+  <span style="flex: 1"></span>
+
+  <a href="//techfever.dev" target="_blank" mat-button color="accent">
+    <mat-icon>open_in_new</mat-icon> See website
+  </a>
+</mat-toolbar>
+
+<mat-drawer-container>
+  <mat-drawer> </mat-drawer>
+
+  <div class="container">
+    <div class="text-center">
+      <h2 class="mat-h2">📆 ngx-mat-power-calendar</h2>
+      <p class="mat-p text-muted">(v{{ packageVersion }})</p>
+      <p class="mat-caption">
+        A package to help you to build android-like real-time calendars with
+        date events
+      </p>
+    </div>
+
+    <div
+      class="text-center"
+      style="
+        background: #009688;
+        max-width: 350px;
+        border-radius: 15px;
+        padding: 10px 5px;
+        margin: 0 auto;
+      "
+    >
+      <mat-icon>info</mat-icon>
+      <p class="mat-p">The part "events" of this package is not finished yet</p>
+    </div>
+
+    <mat-tab-group dynamicHeight class="mt-20">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>category</mat-icon>&nbsp;Example
+        </ng-template>
+
+        <div style="width: 100%; height: 500px; position: relative">
+          <ngx-mat-power-calendar type="month"></ngx-mat-power-calendar>
+        </div>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>description</mat-icon>&nbsp;Documentation
+        </ng-template>
+
+        <!-- <app-documentation></app-documentation> -->
+      </mat-tab>
+    </mat-tab-group>
+
+    <div class="footer text-center">
+      <h4 class="mat-h4">
+        🚀 Powered by <a href="//techfever.dev" target="_blank">TechFever</a>
+      </h4>
+    </div>
+  </div>
+</mat-drawer-container>

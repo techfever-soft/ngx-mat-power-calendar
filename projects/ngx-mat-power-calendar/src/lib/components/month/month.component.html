@@ -1,0 +1,88 @@
+<table
+  class="ngx-mat-power-calendar__month-list"
+  *ngIf="!dayExpanded"
+  [@expand]
+>
+  <thead>
+    <tr>
+      <th *ngFor="let day of weekDays">{{ day }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let week of weeks">
+      <td
+        *ngFor="let day of week.days"
+        class="{{ !day?.date ? 'empty' : '' }} {{ day?.isNow ? 'now' : '' }}"
+        matRipple
+        [matRippleDisabled]="!day?.date"
+        (click)="day?.date ? showDay(day) : ''"
+      >
+        <a
+          *ngIf="day?.date"
+          href="javascript:void(0)"
+          class="{{ day?.metadata?.expanded ? 'expanded' : '' }}"
+        >
+          <span class="date">
+            {{ day?.date | amDateFormat : "D" }}
+          </span>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div
+  *ngIf="dayExpanded"
+  [@expand]
+  class="ngx-mat-power-calendar__month--selected-day"
+>
+  <div class="day-header mat-elevation-z3">
+    <!-- <pre>
+    {{ selectedDay | json }}
+  </pre> -->
+
+    <div class="day--current">
+      <div class="day--current__name">
+        {{ selectedDay.date | amDateFormat : "ddd" }}
+      </div>
+      <div class="day--current__index">
+        {{ selectedDay.date | amDateFormat : "D" }}
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="action">
+      <button mat-icon-button (click)="dayExpanded = !dayExpanded">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="day--hours">
+    <div
+      *ngIf="isSameDate(todayDate, selectedDay.date)"
+      class="day--scroll-to-now"
+      style="position: absolute; z-index: 2; left: 50%; top: 100px"
+      matTooltip="Scroll to current time"
+    >
+      <button mat-mini-fab color="primary" (click)="scrollToNow()">
+        <mat-icon>calendar_view_day</mat-icon>
+      </button>
+    </div>
+
+    <lib-day [day]="selectedDay"></lib-day>
+  </div>
+
+  <div class="day--action">
+    <button
+      mat-fab
+      [disabled]="selectedDay.date < todayDate"
+      matTooltip="Add an event"
+      color="accent"
+      (click)="openAddEventDialog()"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+</div>

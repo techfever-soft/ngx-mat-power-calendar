@@ -1,0 +1,178 @@
+<div class="ngx-mat-power-calendar__dialog">
+  <div matDialogTitle>
+    <mat-icon>add_circle</mat-icon>
+    <h5 class="mat-h5">Add a new event</h5>
+  </div>
+  <form [formGroup]="addEventForm" (submit)="submitEvent()">
+    <div matDialogContent>
+      <div>
+        <mat-form-field>
+          <mat-label>Title</mat-label>
+          <input matInput type="text" formControlName="title" />
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <textarea
+            matInput
+            formControlName="description"
+            cdkTextareaAutosize
+          ></textarea>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field>
+          <mat-label>Color</mat-label>
+          <input
+            matInput
+            type="color"
+            [value]="selectedColor"
+            formControlName="color"
+          />
+        </mat-form-field>
+
+        <div class="color-picker">
+          <button
+            mat-icon-button
+            *ngFor="let color of colors"
+            [style]="'background:' + color.color"
+            (click)="selectColor(color)"
+            type="button"
+          >
+            <mat-icon *ngIf="color.selected">check_circle</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <br />
+
+      <div>
+        <mat-slide-toggle #fullDay="matSlideToggle" formControlName="fullDay">
+          Full day(s)
+        </mat-slide-toggle>
+      </div>
+
+      <br />
+
+      <div>
+        <fieldset>
+          <legend>
+            <mat-icon>first_page</mat-icon>
+            <p class="mat-caption">Start time</p>
+          </legend>
+
+          <mat-form-field (click)="startDatePicker.open()">
+            <mat-label>Start date</mat-label>
+            <input
+              matInput
+              [min]="minStartDate"
+              [matDatepicker]="startDatePicker"
+              (dateChange)="changeDate($event)"
+              readonly
+              #startDateInput
+              formControlName="startDate"
+            />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="startDatePicker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #startDatePicker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field
+            (click)="startTimePicker.open()"
+            *ngIf="!fullDay.checked"
+          >
+            <mat-label>Start time</mat-label>
+            <input
+              matInput
+              [ngxMatTimepicker]="startTimePicker"
+              readonly
+              [format]="24"
+              formControlName="startTime"
+            />
+            <ngx-mat-timepicker #startTimePicker></ngx-mat-timepicker>
+            <button
+              matSuffix
+              mat-icon-button
+              type="button"
+              (click)="!startTimePicker.opened ? startTimePicker.open() : ''"
+            >
+              <mat-icon>access_time</mat-icon>
+            </button>
+          </mat-form-field>
+        </fieldset>
+      </div>
+
+      <br />
+
+      <div>
+        <fieldset>
+          <legend>
+            <mat-icon>last_page</mat-icon>
+            <p class="mat-caption">End time</p>
+          </legend>
+
+          <mat-form-field (click)="endDatePicker.open()">
+            <mat-label>End date</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [matDatepicker]="endDatePicker"
+              readonly
+              formControlName="endDate"
+            />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="endDatePicker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #endDatePicker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field
+            (click)="!endTimePicker.opened ? endTimePicker.open() : ''"
+            *ngIf="!fullDay.checked"
+          >
+            <mat-label>End time</mat-label>
+            <input
+              matInput
+              [ngxMatTimepicker]="endTimePicker"
+              readonly
+              [format]="24"
+              formControlName="endTime"
+            />
+            <ngx-mat-timepicker #endTimePicker></ngx-mat-timepicker>
+            <button
+              matSuffix
+              mat-icon-button
+              (click)="endTimePicker.open()"
+              type="button"
+            >
+              <mat-icon>access_time</mat-icon>
+            </button>
+          </mat-form-field>
+        </fieldset>
+      </div>
+    </div>
+
+    <div matDialogActions>
+      <div style="text-align: right">
+        <button mat-button color="default" type="button" matDialogClose>
+          <mat-icon>close</mat-icon> Cancel
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="addEventForm.invalid"
+        >
+          <mat-icon>check_circle</mat-icon> Add this event
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
