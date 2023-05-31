@@ -6,6 +6,7 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 import moment from 'moment';
 import { NgxMatPowerCalendarService } from '../../../ngx-mat-power-calendar.service';
 import { IPowerEvent } from '../../../interfaces/calendar.interface';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'lib-add-event-dialog',
@@ -19,12 +20,11 @@ export class AddEventDialogComponent {
 
   public addEventForm: FormGroup;
 
-  public now: moment.Moment;
+  public now: moment.Moment = moment();
 
   public minStartDate: moment.Moment;
 
   public minDate: moment.Moment = moment();
-
   public endDate: moment.Moment = moment();
 
   public colors = [
@@ -54,7 +54,8 @@ export class AddEventDialogComponent {
   constructor(
     @Inject(DIALOG_DATA) public data: any,
     private fb: FormBuilder,
-    private calendarService: NgxMatPowerCalendarService
+    private calendarService: NgxMatPowerCalendarService,
+    private dialogRef: MatDialogRef<AddEventDialogComponent>
   ) {
     this.addEventForm = this.fb.group({
       title: ['', Validators.required],
@@ -80,27 +81,31 @@ export class AddEventDialogComponent {
     this.selectColor(this.colors[0]);
 
     this.bindDefaultValues();
-
-    console.log(this.data);
-    
   }
 
   public submitEvent() {
-    console.log(this.addEventForm.value);
-
     const event: IPowerEvent = {
       title: this.addEventForm.value.title,
       description: this.addEventForm.value.description,
       color: this.selectedColor,
       fullDay: this.fullDay.checked,
-      startAt: this.addEventForm.get('startDate')?.value,
-      endAt: this.addEventForm.get('endDate')?.value,
+      startAt: this.addEventForm.value.startDate,
+      endAt: this.addEventForm.value.endDate,
+      top: 0,
+      height: 0,
     };
 
-    this.calendarService.addEventToDay(
+    // TODO
+    event.top = this.calendarService.calculateEventTop(
       this.data.selectedDate,
       event
     );
+    event.height = this.calendarService.calculateEventHeight(event);
+    // console.log(this.calendarService.calculateEventTop(this.data.selectedDate, event));
+
+    this.calendarService.addEventToDay(this.data.selectedDate, event);
+
+    this.dialogRef.close();
   }
 
   public changeDate(event: any) {
@@ -124,10 +129,12 @@ export class AddEventDialogComponent {
   private bindDefaultValues() {
     this.addEventForm.get('color')?.setValue(this.selectedColor);
 
-    this.addEventForm.get('startDate')?.setValue(this.now);
-    this.addEventForm.get('startTime')?.setValue(this.now.format('HH:mm A'));
+    this.addEventForm.get('startDate')?.setValue(this.minDate);
+    this.addEventForm
+      .get('startTime')
+      ?.setValue(this.minDate.format('HH:mm A'));
 
-    this.addEventForm.get('endDate')?.setValue(this.endDate);
+    this.addEventForm.get('endDate')?.setValue(this.endDate.add(1, 'hour'));
     this.addEventForm.get('endTime')?.setValue(this.endDate.format('HH:mm A'));
   }
 }

@@ -1,0 +1,42 @@
+<mat-card>
+  <div class="container-inside-card">
+    <h3 class="mat-h3 text-center highlighted-primary">Basic month calendar</h3>
+
+    <div>
+      <ngx-mat-power-calendar
+        type="month"
+        [localeSubject]="selectedLocale$"
+        [themeSubject]="selectedTheme$"
+      ></ngx-mat-power-calendar>
+    </div>
+
+    <div class="mt-20">
+      <mat-form-field color="accent">
+        <mat-label>Theme</mat-label>
+        <mat-select
+          [value]="selectedTheme"
+          (valueChange)="onSelectTheme($event)"
+        >
+          <mat-option value="primary">Primary</mat-option>
+          <mat-option value="accent">Accent</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field color="accent">
+        <mat-label>Language</mat-label>
+        <mat-select
+          [value]="selectedLocale"
+          (valueChange)="onSelectLocale($event)"
+        >
+          <mat-option value="en">English (en-EN)</mat-option>
+          <mat-option value="fr">French (fr-FR)</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</mat-card>
+
+<!-- <mat-card>
+  <h3 class="mat-h3 text-center highlighted-primary">Extended month calendar</h3>
+  <ngx-mat-power-calendar type="extended-month"></ngx-mat-power-calendar>
+</mat-card> -->

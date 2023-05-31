@@ -1,40 +1,80 @@
-<table
-  class="ngx-mat-power-calendar__month-list"
-  *ngIf="!dayExpanded"
-  [@expand]
->
-  <thead>
-    <tr>
-      <th *ngFor="let day of weekDays">{{ day }}</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let week of weeks">
-      <td
-        *ngFor="let day of week.days"
-        class="{{ !day?.date ? 'empty' : '' }} {{ day?.isNow ? 'now' : '' }}"
-        matRipple
-        [matRippleDisabled]="!day?.date"
-        (click)="day?.date ? showDay(day) : ''"
-      >
-        <a
-          *ngIf="day?.date"
-          href="javascript:void(0)"
-          class="{{ day?.metadata?.expanded ? 'expanded' : '' }}"
+<!-- NOTE: Default -->
+<div *ngIf="type === 'month'">
+  <table
+    class="ngx-mat-power-calendar__month-list {{ currentTheme }}"
+    *ngIf="!dayExpanded"
+    [@expand]
+  >
+    <thead>
+      <tr>
+        <th *ngFor="let day of weekDays">{{ day }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let week of weeks">
+        <td
+          *ngFor="let day of week.days"
+          class="{{ !day?.date ? 'empty' : '' }} {{ day?.isNow ? 'now' : '' }}"
+          matRipple
+          [matRippleDisabled]="!day?.date"
+          (click)="day?.date ? showDay(day) : ''"
         >
-          <span class="date">
-            {{ day?.date | amDateFormat : "D" }}
-          </span>
-        </a>
-      </td>
-    </tr>
-  </tbody>
-</table>
+          <a
+            *ngIf="day?.date"
+            href="javascript:void(0)"
+            class="{{ day?.metadata?.expanded ? 'expanded' : '' }}"
+          >
+            <span class="date">
+              {{ day?.date | amDateFormat : "D" }}
+            </span>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
+<!-- NOTE: Extended -->
+<div *ngIf="type === 'extended-month'">
+  <table
+    class="ngx-mat-power-calendar__month-list extended"
+    *ngIf="!dayExpanded"
+    [@expand]
+  >
+    <thead>
+      <tr>
+        <th *ngFor="let day of weekDays">{{ day }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let week of weeks">
+        <td
+          *ngFor="let day of week.days"
+          class="{{ !day?.date ? 'empty' : '' }} {{ day?.isNow ? 'now' : '' }}"
+          matRipple
+          [matRippleDisabled]="!day?.date"
+          (click)="day?.date ? showDay(day) : ''"
+        >
+          <a
+            *ngIf="day?.date"
+            href="javascript:void(0)"
+            class="{{ day?.metadata?.expanded ? 'expanded' : '' }}"
+          >
+            <span class="date">
+              {{ day?.date | amDateFormat : "D" }}
+            </span>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- NOTE : Day loader -->
 <div
   *ngIf="dayExpanded"
   [@expand]
-  class="ngx-mat-power-calendar__month--selected-day"
+  class="ngx-mat-power-calendar__month--selected-day {{ currentTheme }}"
 >
   <div class="day-header mat-elevation-z3">
     <!-- <pre>
@@ -43,7 +83,7 @@
 
     <div class="day--current">
       <div class="day--current__name">
-        {{ selectedDay.date | amDateFormat : "ddd" }}
+        {{ selectedDay.date | amLocale : currentLocale | amDateFormat : "ddd" }}
       </div>
       <div class="day--current__index">
         {{ selectedDay.date | amDateFormat : "D" }}
@@ -63,10 +103,10 @@
     <div
       *ngIf="isSameDate(todayDate, selectedDay.date)"
       class="day--scroll-to-now"
-      style="position: absolute; z-index: 2; left: 50%; top: 100px"
+      style="position: absolute; z-index: 2; left: 50%; top: 10px"
       matTooltip="Scroll to current time"
     >
-      <button mat-mini-fab color="primary" (click)="scrollToNow()">
+      <button mat-mini-fab [color]="currentTheme" (click)="scrollToNow()">
         <mat-icon>calendar_view_day</mat-icon>
       </button>
     </div>
@@ -79,7 +119,7 @@
       mat-fab
       [disabled]="selectedDay.date < todayDate"
       matTooltip="Add an event"
-      color="accent"
+      [color]="currentTheme"
       (click)="openAddEventDialog()"
     >
       <mat-icon>add</mat-icon>

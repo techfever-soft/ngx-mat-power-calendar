@@ -9,26 +9,61 @@ import moment from 'moment';
 export class NgxMatPowerCalendarService {
   constructor() {}
 
+  /**
+   * Add an event to the selected day
+   *
+   * @param day IPowerDay
+   * @param event IPowerEvent
+   */
   public addEventToDay(day: IPowerDay, event: IPowerEvent): void {
     day.events?.push(event);
   }
 
+  /**
+   * Calculate the top absolute position in pixels of an event
+   *
+   * @param day IPowerDay
+   * @param event IPowerEvent
+   * @returns number
+   */
   public calculateEventTop(day: IPowerDay, event: IPowerEvent): number {
-    const startTimeInMinutes = moment(event.startAt).diff(
-      moment(day.date).startOf('day'),
-      'minutes'
-    );
-    return (startTimeInMinutes / 1440) * 100;
+    const startTime = moment(event.startAt);
+    const endTime = moment(event.endAt);
+
+    const dayStart = moment(day.date).startOf('day');
+    const dayDurationInMinutes = moment(day.date)
+      .endOf('day')
+      .diff(dayStart, 'minutes');
+
+    const eventStartMinutes = startTime
+      .startOf('hour')
+      .diff(dayStart, 'minutes');
+
+    return eventStartMinutes * (60 / 60) + 15;
   }
 
+  /**
+   * Calculate the height in pixels of an event
+   *
+   * @param event IPowerEvent
+   * @returns number
+   */
   public calculateEventHeight(event: IPowerEvent): number {
-    const durationInMinutes = moment(event.endAt).diff(
-      event.startAt,
-      'minutes'
-    );
-    return (durationInMinutes / 1440) * 100 + 1;
+    const startTime = moment(event.startAt);
+    const endTime = moment(event.endAt);
+
+    const eventDurationInMinutes = endTime.diff(startTime, 'minutes');
+    const pixelsPerHour = 60; // Nombre de pixels par heure (ajustez selon vos besoins)
+
+    return (eventDurationInMinutes / 60) * pixelsPerHour;
   }
 
+  /**
+   * Returns an array of days formatted to fit a month calendar
+   *
+   * @param days IPowerDay[]
+   * @returns Promise<any[]>
+   */
   public prepareDaysForTable(days: IPowerDay[]): Promise<any[]> {
     return new Promise((resolve, reject) => {
       let table: any[] = [];

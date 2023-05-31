@@ -9,6 +9,13 @@
 
   @include month.month($theme);
 
+  ngx-mat-power-calendar {
+    min-width: 350px;
+    min-height: 250px;
+    height: 100%;
+    width: 100%;
+  }
+
   .ngx-mat-power-calendar__dialog {
     [matDialogTitle] {
       text-align: center;
@@ -22,7 +29,7 @@
       }
     }
     [matDialogContent] {
-      @media screen and (max-width:479px) {
+      @media screen and (max-width: 479px) {
         max-height: 250px;
       }
       mat-form-field {

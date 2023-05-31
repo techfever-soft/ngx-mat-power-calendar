@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import packageVersion from '../../../ngx-mat-power-calendar/package.json';
+import packageVersion from 'package.json';
 
 @Component({
   selector: 'app-root',

@@ -10,10 +10,58 @@
   $background: mat.get-color-from-palette($color-config, "background");
   $foreground: mat.get-color-from-palette($color-config, "foreground");
 
+  // ngx-mat-power-calendar[theme="primary"] {
+
+  //   .ngx-mat-power-calendar__month--selected-day {
+  //     .day-header {
+  //       background: mat.get-color-from-palette($accent-palette);
+  //     }
+  //   }
+  // }
+  // ngx-mat-power-calendar[theme="accent"] {
+  //   table {
+  //     td.now a .date {
+  //       background: mat.get-color-from-palette($accent-palette);
+  //     }
+  //   }
+  //   .ngx-mat-power-calendar__month--selected-day {
+  //     .day-header {
+  //       background: mat.get-color-from-palette($primary-palette);
+  //     }
+  //   }
+  // }
+
   table.ngx-mat-power-calendar__month-list {
     display: block;
     overflow-x: auto;
     overflow-y: hidden;
+
+    // Start themes
+
+    &.primary {
+      td.now a .date {
+        background: mat.get-color-from-palette($primary-palette);
+        color: mat.get-color-from-palette($primary-palette, "500-contrast");
+      }
+    }
+
+    &.accent {
+      td.now a .date {
+        background: mat.get-color-from-palette($accent-palette);
+        color: mat.get-color-from-palette($accent-palette, "500-contrast");
+      }
+    }
+
+    // End themes
+
+    &.extended {
+      td a {
+        padding: 10px 15px;
+        .date {
+          align-items: center;
+        }
+      }
+    }
 
     &.without-border {
       td {
@@ -34,7 +82,6 @@
       &.now {
         a .date {
           font-weight: bold;
-          background: mat.get-color-from-palette($primary-palette);
         }
       }
 
@@ -55,21 +102,89 @@
           display: block;
           border-radius: 50px;
           padding: 10px;
-          height: 10px;
-          width: 10px;
+          height: 20px;
           margin: 0 auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
       }
     }
   }
 
+  // NOTE: DAY
+
   .ngx-mat-power-calendar__month--selected-day {
     display: flex;
     flex-direction: column;
     height: 100%;
-    position: absolute;
+    position: relative;
+    max-height: 350px;
     width: 100%;
     color: mat.get-color-from-palette($foreground, "text");
+
+    // Start themes
+
+    &.primary {
+      .day-header {
+        background: mat.get-color-from-palette($accent-palette);
+        .day--current {
+          .day--current__name {
+            color: mat.get-color-from-palette($primary-palette, "500-contrast");
+          }
+          .day--current__index {
+            background: mat.get-color-from-palette($primary-palette);
+            color: mat.get-color-from-palette($primary-palette, "500-contrast");
+          }
+        }
+      }
+
+      .day--hours {
+        .hour {
+          .hour-inner .hour-inner--caption.now {
+            color: mat.get-color-from-palette($accent-palette);
+          }
+          .hour-tracker {
+            border: 1px solid mat.get-color-from-palette($accent-palette);
+            &::before {
+              background: mat.get-color-from-palette($accent-palette);
+            }
+          }
+        }
+      }
+    }
+
+    &.accent {
+      .day-header {
+        background: mat.get-color-from-palette($primary-palette);
+        .day--current {
+          .day--current__name {
+            color: mat.get-color-from-palette($accent-palette, "500-contrast");
+          }
+          .day--current__index {
+            background: mat.get-color-from-palette($accent-palette);
+            color: mat.get-color-from-palette($accent-palette, "500-contrast");
+          }
+        }
+      }
+
+      .day--hours {
+        .hour {
+          .hour-inner .hour-inner--caption.now {
+            color: mat.get-color-from-palette($primary-palette);
+          }
+          .hour-tracker {
+            border: 1px solid mat.get-color-from-palette($primary-palette);
+            &::before {
+              background: mat.get-color-from-palette($primary-palette);
+            }
+          }
+        }
+      }
+    }
+
+    // End themes
+
     .day-header {
       display: flex;
       text-align: start;
@@ -79,6 +194,7 @@
       background: mat.get-color-from-palette($accent-palette);
       .action {
         text-align: right;
+        color: mat.get-color-from-palette($accent-palette, "500-contrast");
       }
       .spacer {
         flex: 1;
@@ -101,8 +217,16 @@
     }
 
     .day--hours {
-      overflow: auto;
-      overflow-x: hidden;
+      overflow: hidden;
+      height: 300px;
+      top: 0px;
+      position: relative;
+      lib-day {
+        display: block;
+        overflow: auto;
+        height: 250px;
+      }
+
       .hour {
         position: relative;
         .hour-inner {
@@ -117,15 +241,15 @@
             justify-content: center;
             align-items: center;
             border-right: 1px solid rgba(mat.get-color-from-palette($foreground, "text"), 0.1);
-            &.now {
-              color: mat.get-color-from-palette($primary-palette);
-            }
+            // &.now {
+            //   color: mat.get-color-from-palette($primary-palette);
+            // }
           }
         }
         .hour-tracker {
           border: 1px solid mat.get-color-from-palette($primary-palette);
           height: 0px;
-          width: calc(100% - 60px);
+          width: 100%;
           position: relative;
           left: 60px;
           &:before {
@@ -145,16 +269,18 @@
 
     .day--action {
       position: absolute;
-      bottom: 25px;
-      right: 25px;
+      bottom: 35px;
+      right: 35px;
     }
 
     .event-container {
       position: relative;
       left: 60px;
-      z-index: 1;
+      z-index: 0;
       .event {
         position: absolute;
+        max-width: 150px;
+        overflow: hidden;
       }
     }
   }

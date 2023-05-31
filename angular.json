@@ -28,7 +28,10 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "tsConfig": "projects/ngx-mat-power-calendar/tsconfig.spec.json",
-            "polyfills": ["zone.js", "zone.js/testing"]
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
           }
         }
       }
@@ -50,7 +53,9 @@
             "outputPath": "dist/ngx-mat-power-calendar-demo",
             "index": "projects/ngx-mat-power-calendar-demo/src/index.html",
             "main": "projects/ngx-mat-power-calendar-demo/src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "projects/ngx-mat-power-calendar-demo/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -111,7 +116,10 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "projects/ngx-mat-power-calendar-demo/tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -123,6 +131,16 @@
               "projects/ngx-mat-power-calendar/src/lib/global.scss"
             ],
             "scripts": []
+          }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "ngx-mat-power-calendar-demo:build:production",
+            "firebaseProject": "ngx-mat-power-calendar",
+            "firebaseHostingSite": "ngx-mat-power-calendar"
           }
         }
       }

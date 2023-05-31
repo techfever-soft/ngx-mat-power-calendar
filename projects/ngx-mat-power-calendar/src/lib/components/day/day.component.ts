@@ -18,8 +18,6 @@ export class DayComponent implements OnInit {
   constructor(private calendarService: NgxMatPowerCalendarService) {}
 
   ngOnInit(): void {
-    console.log(this.day);
-
     this.generateHours(this.day);
 
     setInterval(() => {
@@ -27,7 +25,7 @@ export class DayComponent implements OnInit {
     }, 60000);
 
     const updateTime = moment().startOf('day').add(1, 'day');
-    const updatePeriod = 24 * 60 * 60 * 1000; // 24 heures en millisecondes
+    const updatePeriod = 24 * 60 * 60 * 1000;
 
     setTimeout(() => {
       setInterval(() => {
@@ -35,19 +33,6 @@ export class DayComponent implements OnInit {
       }, updatePeriod);
       this.updateHours();
     }, updateTime.diff(moment()));
-
-    // TODO: scroll to the current time
-    // setTimeout(() => {
-    //   const container = document.querySelector('.day--hours') as HTMLElement;
-    //   const height = document.querySelector('.hour-tracker') as HTMLElement;
-    //   if (height && container) {
-    //     let newHeight = height.scrollHeight as number;
-    //     container.scrollTo({
-    //       top: newHeight,
-    //       behavior:'smooth',
-    //     })
-    //   }
-    // }, 1000);
   }
 
   private generateHours(day: IPowerDay): void {
@@ -69,7 +54,6 @@ export class DayComponent implements OnInit {
     }
 
     day.events?.forEach((event: IPowerEvent, index: number) => {
-      console.log(event);
       const eventTop = this.calendarService.calculateEventTop(this.day, event);
       const eventHeight = this.calendarService.calculateEventHeight(event);
       if (day.events) {
@@ -92,10 +76,8 @@ export class DayComponent implements OnInit {
   }
 
   private updateHours(): void {
-    // Réinitialiser le tableau "hours"
     this.hours = [];
 
-    // Générer les heures mises à jour pour la journée en cours
     this.generateHours({
       date: moment(),
       index: 0,

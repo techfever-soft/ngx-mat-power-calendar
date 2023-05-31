@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "ngx-mat-power-calendar"
+  },
+  "targets": {
+    "ngx-mat-power-calendar": {
+      "hosting": {
+        "ngx-mat-power-calendar-demo": [
+          "ngx-mat-power-calendar"
+        ]
+      }
+    }
   }
 }

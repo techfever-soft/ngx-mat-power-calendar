@@ -4,8 +4,8 @@
 
 @include mat.core();
 
-$my-primary: mat.define-palette(mat.$teal-palette, 500);
-$my-accent: mat.define-palette(mat.$purple-palette, A200, A100, A400);
+$my-primary: mat.define-palette(mat.$amber-palette);
+$my-accent: mat.define-palette(mat.$green-palette);
 
 $my-typography: mat.define-typography-config(
   $font-family: "Montserrat",
@@ -52,10 +52,10 @@ p.mat-caption {
 NOTE: Custom styles
 */
 
-
 .mat-mdc-card {
   width: auto;
   border-radius: 15px !important;
+  padding: 0 !important;
 }
 
 .mat-mdc-button,
@@ -106,6 +106,19 @@ NOTE: Custom styles
   position: relative;
 }
 
+.highlighted-primary {
+  background: mat.get-color-from-palette($my-primary);
+  color: #000;
+  padding: 15px;
+  border-radius: 15px;
+}
+
+.container-inside-card {
+  padding: 15px;
+}
+
+/////
+
 .mdc-card {
   max-height: 500px;
   width: fit-content;
@@ -133,6 +146,10 @@ NOTE: Custom styles
 .mat-row,
 .mat-header-row {
   display: table-row;
+}
+
+mat-form-field {
+  width: 100%;
 }
 
 // ANCHOR: App styles

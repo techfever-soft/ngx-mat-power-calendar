@@ -1,8 +1,13 @@
 <div class="event-container">
   <div
     class="event"
-    *ngFor="let event of day.events"
-    style="background: red; top: 1px"
+    *ngFor="let event of day.events; let index = index"
+    [ngStyle]="{
+      top: event.top + 'px',
+      height: event.height + 'px',
+      background: event.color,
+      left: 150 * index + 'px'
+    }"
   >
     <pre>
       {{ event | json }}
